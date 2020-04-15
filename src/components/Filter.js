@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import styled from "styled-components";
+
+import Contexto from '../SearchContext'
+import StatusContext from '../StatusContext'
+import ProjectContext from '../ProjectContext'
+import SearchRFAContext from '../SearchRFAContext'
 
 const STATUS_QUERY = gql`
   query STATUS_QUERY {
@@ -16,6 +21,7 @@ const PROJECTS_QUERY = gql`
 `;
 
 const FilterBox = styled.div`
+  width: 70vw;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
@@ -30,10 +36,15 @@ const FilterBox = styled.div`
   }
 
   .orderBy-select {
+    justify-self: end;
     margin-right: 0.5rem;
+    float: right;
     &::before {
       content: "order by";
-      border-bottom: 1px solid red;
+      color: #B4836A;
+      font-size: 0.7rem;
+      float: left;
+      border-bottom: 1px solid #fe6b21;
     }
   }
 
@@ -51,16 +62,39 @@ const FilterBox = styled.div`
 `;
 
 const Filter = () => {
+  const { value, setValue } = useContext(Contexto);
+  const { status, setStatus } = useContext(StatusContext);
+  const { project, setProject } = useContext(ProjectContext);
+  const { rfaID, setRfaID } = useContext(SearchRFAContext);
+
   const {
     loading: loadingStatus,
     error: errorStatus,
     data: dataStatus
   } = useQuery(STATUS_QUERY);
+
   const {
     loading: loadingProjects,
     error: errorProjects,
     data: dataProjects
   } = useQuery(PROJECTS_QUERY);
+
+  const handleOrder = (e) => {
+    e.preventDefault();
+    setValue(e.target.value);
+  }
+
+  const handleStatus = (e) => {
+    setStatus(e.target.value);
+  }
+
+  const handleProject = (e) => {
+    setProject(e.target.value);
+  }
+
+  const handleRfaId = (e) => {
+    setRfaID(e.target.value);
+  }
 
   if (loadingStatus || loadingProjects) return <p>... Loading ... </p>;
   if (errorStatus || errorProjects) return <p>An error occurred</p>;
@@ -73,29 +107,30 @@ const Filter = () => {
   ) {
     return (
       <FilterBox>
-        <select id="project-select">
+        <select id="project-select" onChange={handleProject}>
           <option defaultValue value="">
-            Select a Project
+            All
           </option>
           {dataProjects.projects.map(project => (
-            <option value={project} key={project}>
+            <option value={project} key={project} >
               {project}
             </option>
           ))}
         </select>
-        <select id="status-select">
+        <select id="status-select" onChange={handleStatus}>
           <option defaultValue value="">
-            Select a Status
+            All
           </option>
+          <option value="NotClosed">Not Closed</option>
           {dataStatus.status.map(s => (
             <option value={s} key={s}>
               {s}
             </option>
           ))}
         </select>
-        <input id="rfaid-input" placeholder="search a RFA ID" />
+        <input id="rfaid-input" placeholder="search a RFA ID" onChange={handleRfaId} />
         <div className="orderBy-select">
-          <select id="orderBy-select">
+          <select id="orderBy-select" onChange={handleOrder}>
             <option value="project" defaultValue>
               Project
             </option>

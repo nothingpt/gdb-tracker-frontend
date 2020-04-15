@@ -1,0 +1,5 @@
+List of Todos
+
+- In the status box, add an option for "Not Closed"
+- In the edit gdb add an option to make the gdb inactive (do not appear in gdb list)
+- in filter box add a checkbox for showing inactive gdbs

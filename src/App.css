@@ -2,6 +2,36 @@
   box-sizing: border-box;
   }
 
+.gdbList-container {
+  width: 70vw;
+  height: calc(100vh - 100px);
+  border-radius: 16px;
+  background: #f2d9d4;
+  min-height: calc(100vh-250px);
+  font-family: "Nunito";
+  font-size: 1rem;
+}
+
+.results-header {
+  color: #fe6b21;
+  padding: 0;
+}
+
+.results-header-project {
+  padding-left: 4px;
+  padding-top: 2px;
+}
+
+.results-content {
+  font-family: 'Nunito';
+  font-size: 0.7rem;
+  color: #52A3CC;
+}
+
+.results-header-notes {
+  padding-right: 6px;
+}
+
 .newGdb {
   color: #D4EDF2;
   font-weight: 700;
@@ -13,6 +43,14 @@
 
 .project-select {
   border: none;
+  height: 2rem;
+  border-radius: 4px;
+  background: #D4EDF2;
+  color: #fe6b21;
+}
+
+.project-select--error {
+  border: 2px solid red;
   height: 2rem;
   border-radius: 4px;
   background: #D4EDF2;
@@ -52,6 +90,17 @@
   padding-left: 4px;
 }
 
+.rfaid-input--error, .description-input--error {
+  border: 2px solid red;
+  height: 2rem;
+  border-radius: 4px;
+  width: 100%;
+  background: #D4EDF2;
+  color: #fe6b21;
+  font-family: "Nunito";
+  padding-left: 4px;
+}
+
 .notesLabel, .description-label, .rfaid-label, .project-label, .date-label {
   font-family: 'Nunito';
   font-size: 1rem;
@@ -59,6 +108,7 @@
 }
 
 .notesTextarea {
+  font-family: 'Nunito';
   border: none;
   border-radius: 4px;
   width: 100%;
