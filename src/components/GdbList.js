@@ -58,6 +58,11 @@ const Gdbs = styled.div`
   }
 `;
 
+const descStyle = {
+  borderLeft: '1px solid #52A3CC',
+  paddingLeft: 4 + 'px'
+}
+
 const GdbList = () => {
   const { value } = useContext(Contexto);
   const { status } = useContext(StatusContext);
@@ -96,13 +101,21 @@ const GdbList = () => {
             <React.Fragment key={gdb.rfaid}>
             <span className='results-content'>{gdb.project}</span>
             <span className='results-content'>{gdb.rfaid}</span>
-            <span className='results-content'>{gdb.description}</span>
-            <Link to={{
-              pathname: '/gdb',
-              state: {
-                gdb
-              }
-            }} className='results-content'>{gdb.status}</Link>
+            <div className="tooltip results-content">
+              <span className='tooltiptext'>{gdb.description}</span>
+              <span className='results-content' style={descStyle}>
+                {gdb.description.substring(0, 50)}
+              </span>
+            </div>
+            <div className='tooltip results-content'>
+              <span className='tooltiptext-status'>{gdb.status}</span>
+              <Link to={{
+                pathname: '/gdb',
+                state: {
+                  gdb
+                }
+              }} className='results-content link'>{gdb.status.substring(0, 15)}</Link>
+            </div>
             <span className='results-content'>{moment(gdb.updated).format('DD-MM-YYYY')}</span>
             {gdb.notes.length>0 ? <span className='results-content'>view</span>:<span className='results-content'></span>}
             </React.Fragment>

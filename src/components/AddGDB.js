@@ -203,7 +203,7 @@ const AddGDB = () => {
                   className='date-input'
                   dateFormat='dd/MM/yyyy'
                   selected={created}
-                  onChange={date => setCreated(date)}
+                  onChange={date => console.log(date)}
                 />
               </div>
             </div>

@@ -57,33 +57,62 @@
   color: #fe6b21;
 }
 
-.project-container, .date-container {
+.project-container {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: repeat(4, auto);
 }
 
 .date-container {
   justify-self: end;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto;
 }
 
-.btnSubmit {
+.new-status-row {
+  justify-self: left;
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+.btnSubmit, .newNote-save {
   border: none;
   background: #fe6b21;
   width: 5rem;
   height: 2rem;
   justify-self: end;
-  align-self: center;
+  align-self: end;
   color: #D4EDF2;
   cursor: pointer;
 } 
+
+.newNote-cancel {
+  border: none;
+  background: #fe6b21;
+  width: 5rem;
+  height: 2rem;
+  justify-self: end;
+  align-self: end;
+  color: #D4EDF2;
+  cursor: pointer;
+  justify-self: start;
+}
 
 .description-input, .rfaid-input, .date-input {
   border: none;
   height: 2rem;
   border-radius: 4px;
   width: 100%;
+  background: #D4EDF2;
+  color: #fe6b21;
+  font-family: "Nunito";
+  padding-left: 4px;
+}
+
+.newStatus-input {
+  border: none;
+  height: 2rem;
+  border-radius: 4px;
+  width: 50%;
   background: #D4EDF2;
   color: #fe6b21;
   font-family: "Nunito";
@@ -115,4 +144,148 @@
   height: 100%;
   background: #D4EDF2;
   color: #fe6b21;
+}
+
+.showNewStatus {
+  display: block;
+}
+
+.hideNewStatus {
+  z-index: -9999;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 500px;
+  background-color: #fff;
+  color: #fe6b21;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 4px;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext-status {
+  visibility: hidden;
+  width: 200px;
+  background-color: #fff;
+  color: #fe6b21;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 4px;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+.tooltip .tooltiptext-status::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip:hover .tooltiptext-status {
+  visibility: visible;
+}
+
+.link {
+  padding-right: 4px;
+}
+
+.notes {
+   display: grid;
+   grid-template-rows: auto auto 1fr;
+   grid-gap: 4px;
+}
+
+.newNote--container {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.newNote--buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.noteContainer {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.note--container {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+}
+
+.note--info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.note--info--created {
+  font-family: 'Nunito';
+  color: #D4EDF2;
+  font-size: 0.7rem;
+  justify-self: end;
+}
+
+.note--info--total {
+  font-family: 'Nunito';
+  color: #D4EDF2;
+  font-size: 0.7rem;
+  justify-self: start;
+}
+
+.prev-next-icons {
+  color: #fe6b21;
+  font-size: 3rem;
+}
+
+.prev-next-icons-disabled {
+  color: #b3b3b3;
+  font-size: 3rem;
+}
+
+.badge {
+  margin-left: 4px;
+  display: inline-block;
+  min-width: 8px; /* rem unit */
+  padding: 4px 8px; /* rem unit */
+  border-radius: 50%;
+  font-size: 12px;
+  text-align: center;
+  background: #fe6b21 ;
+  color: #fefefe;
 }
