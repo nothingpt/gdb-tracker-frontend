@@ -25,6 +25,7 @@
 .results-content {
   font-family: 'Nunito';
   font-size: 0.7rem;
+  font-weight: 700;
   color: #52A3CC;
 }
 
@@ -83,6 +84,7 @@
   align-self: end;
   color: #D4EDF2;
   cursor: pointer;
+  margin-bottom: 8px;
 } 
 
 .newNote-cancel {
@@ -106,6 +108,10 @@
   color: #fe6b21;
   font-family: "Nunito";
   padding-left: 4px;
+}
+
+.date-input {
+  justify-self: start;
 }
 
 .newStatus-input {
@@ -161,7 +167,7 @@
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 500px;
+  width: 600px;
   background-color: #fff;
   color: #fe6b21;
   text-align: center;
@@ -172,6 +178,7 @@
   bottom: 150%;
   left: 4px;
   margin-left: -60px;
+  border: 1px solid #fe6b21;
 }
 
 .tooltip .tooltiptext-status {
@@ -187,6 +194,7 @@
   bottom: 150%;
   left: 4px;
   margin-left: -60px;
+  border: 1px solid #fe6b21;
 }
 
 .tooltip .tooltiptext::after {
@@ -197,7 +205,7 @@
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: white transparent transparent transparent;
+  border-color: #fe6b21 transparent transparent transparent;
 }
 
 .tooltip .tooltiptext-status::after {
@@ -208,7 +216,7 @@
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: white transparent transparent transparent;
+  border-color: #fe6b21 transparent transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {
@@ -288,4 +296,19 @@
   text-align: center;
   background: #fe6b21 ;
   color: #fefefe;
+}
+
+.pagination-container {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-self: end;
+}
+
+.pagination-middle {
+  align-self: center;
+  justify-self: center;
+  font-family: 'Nunito';
+  font-size: 1rem;
+  font-weight: 900;
+  color: #52A3CC;
 }

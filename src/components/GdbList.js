@@ -9,10 +9,12 @@ import Contexto from '../SearchContext';
 import StatusContext from '../StatusContext';
 import ProjectContext from '../ProjectContext';
 import SearchRFAContext from '../SearchRFAContext';
+import OffsetContext from '../OffsetContext';
+import PageContext from '../PagesContext';
 
 const GDBS_QUERY = gql`
-  query gdbs ($sort: String, $project: String, $status: String, $searchRFA: String) {
-    gdbs (sort: $sort, project: $project, status: $status, searchRFA: $searchRFA) {
+  query gdbs ($sort: String, $project: String, $status: String, $searchRFA: String, $offset: Int) {
+    gdbs (sort: $sort, project: $project, status: $status, searchRFA: $searchRFA, offset: $offset) {
       _id
       project
       rfaid
@@ -25,6 +27,18 @@ const GDBS_QUERY = gql`
       created
       updated
     }
+  }
+`; //totalCountFilter
+
+const TOTAL_COUNT_QUERY = gql`
+  query TOTAL_COUNT_QUERY ($project: String, $status: String, $searchRFA: String) {
+    totalCountFilter (project: $project, status: $status, searchRFA: $searchRFA)
+  }
+`;
+
+const TOTAL_GDBS_QUERY = gql`
+  query TOTAL_GDBS_QUERY {
+    getTotalGDBs
   }
 `;
 
@@ -68,28 +82,50 @@ const GdbList = () => {
   const { status } = useContext(StatusContext);
   const { project } = useContext(ProjectContext);
   const { rfaID } = useContext(SearchRFAContext);
+  const { offset } = useContext(OffsetContext);
+  const { pages, setPages} = useContext(PageContext);
+
+  const {loading: loadingTotal, error: errorTotal, data: dataTotal} = useQuery(TOTAL_GDBS_QUERY);
 
   const { loading, error, data, refetch } = useQuery(GDBS_QUERY, {
     variables: {
       sort: value,
       status: status,
       project: project,
-      searchRFA: rfaID
+      searchRFA: rfaID,
+      offset: offset
+    },
+  });
+
+  const { loading: loadingTotalCount, error: errorTotalCount, data: dataTotalCount, refetch: refetchTotal } = useQuery(TOTAL_COUNT_QUERY, {
+    variables: {
+      status: status,
+      project: project,
+      searchRFA: rfaID,
     },
   });
 
   useEffect(() => {
     // TODO: Implement debounce (lodash)
-    refetch()
+    refetch();
+    refetchTotal();
   }, [value, status, project, rfaID]);
 
   if (error) return <p> an error occurred </p>;
+  if (errorTotal) return <p>An error has occurred</p>
   if (loading) return <h4>...loading...</h4>;
+  if (loadingTotal) return <h4>...loading...</h4>
+
+  if (dataTotal && dataTotal.getTotalGDBs) {
+    setPages(Math.ceil(dataTotal.getTotalGDBs / 35));
+  }
 
   if (data && data.gdbs) {
+    if (dataTotalCount && dataTotalCount.totalCountFilter) {
+      setPages(Math.ceil(dataTotalCount.totalCountFilter / 35));
+    }
     const { gdbs } = data;
     return (
-      <div className='gdbList-container'>
         <Gdbs>
           <span className='results-header results-header-project'>Project</span>
           <span className='results-header'>RFA ID</span>
@@ -117,11 +153,10 @@ const GdbList = () => {
               }} className='results-content link'>{gdb.status.substring(0, 15)}</Link>
             </div>
             <span className='results-content'>{moment(gdb.updated).format('DD-MM-YYYY')}</span>
-            {gdb.notes.length>0 ? <span className='results-content'>view</span>:<span className='results-content'></span>}
+            {gdb.notes.length>0 ? <span className='results-content'>V</span>:<span className='results-content'></span>}
             </React.Fragment>
           ))}
         </Gdbs>
-      </div>
     );
   }
 }

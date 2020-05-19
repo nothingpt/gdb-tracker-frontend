@@ -3,11 +3,14 @@ import styled from "styled-components";
 
 import GdbList from "./GdbList";
 import Filter from "./Filter";
+import Pagination from './Pagination'
 
 import SearchContext from '../SearchContext';
 import StatusContext from '../StatusContext';
 import ProjectContext from '../ProjectContext';
 import SearchRFAContext from '../SearchRFAContext';
+import OffsetContext from '../OffsetContext';
+import PageContext from '../PagesContext';
 
 import "../App.css";
 
@@ -21,10 +24,12 @@ const Content = styled.div`
 `;
 
 const Home = () => {
-  const [ value, setValue] = useState('project');
-  const [ status, setStatus] = useState('');
+  const [ value, setValue ] = useState('project');
+  const [ status, setStatus ] = useState('');
   const [ project, setProject ] = useState('');
-  const [ rfaID, setRfaID] = useState('');
+  const [ rfaID, setRfaID ] = useState('');
+  const [ offset, setOffset ] = useState(1);
+  const [ pages, setPages ] = useState(0);
 
   return (
     <Content>
@@ -32,8 +37,15 @@ const Home = () => {
         <StatusContext.Provider value={{ status, setStatus }}>
           <ProjectContext.Provider value={{ project, setProject }}>
             <SearchRFAContext.Provider value={{ rfaID, setRfaID }}>
-              <Filter />
-              <GdbList />
+              <OffsetContext.Provider value={{ offset, setOffset }}>
+                <PageContext.Provider value={{ pages, setPages }}>
+                  <Filter/>
+                  <div className='gdbList-container'>
+                    <GdbList />
+                    <Pagination/>
+                  </div>
+                </PageContext.Provider>
+              </OffsetContext.Provider>
             </SearchRFAContext.Provider>
           </ProjectContext.Provider>
         </StatusContext.Provider>

@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import { useHistory } from 'react-router-dom'
 
 const PROJECTS_QUERY = gql`
   query PROJECTS_QUERY {
@@ -91,7 +92,9 @@ const AddGDB = () => {
     loading: loadingProjects,
     error: errorProjects,
     data: dataProjects
-  } = useQuery(PROJECTS_QUERY)
+  } = useQuery(PROJECTS_QUERY);
+
+  let history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -124,10 +127,11 @@ const AddGDB = () => {
       }
 
       if (note) {
-        newGdb.note = note;
+        newGdb.notes = note;
       }
 
-      addGdb({variables: newGdb})
+      addGdb({variables: newGdb});
+      history.push('/');
       // TODO: alertar que entrada foi criada
       // TODO: retornar para a lista
     } else {

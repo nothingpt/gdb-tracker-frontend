@@ -40,7 +40,7 @@ mutation updateGdb(
     created: $created,
     updated: $updated,
     status: $status,
-    notes: $notes
+    notes: $notes,
     ){
       _id
     }
@@ -368,6 +368,7 @@ const Gdb = (props) => {
                   <button className='newNote-save' onClick={handleSaveNewNote}>Save</button>
                 </div>
               </div>
+              {(notes && notes.length > 0) &&
               <div key={note.created} className='noteContainer'>
                 <div className='note--container'>
                   <span className='previousNote'><FontAwesomeIcon icon={faAngleLeft} onClick={handlePreviousNote} className={(idx == 0) ? 'prev-next-icons-disabled':'prev-next-icons'} fixedWidth /></span>
@@ -378,7 +379,7 @@ const Gdb = (props) => {
                   <span className='note--info--total'>{idx + 1} / {notes.length}</span>
                   <span className='note--info--created'>{moment(notes[idx].created).format('DD/MM/YYYY')}</span>
                 </div>
-              </div>
+              </div>}
             </div>
             <button type='submit' className='btnSubmit'>
               Save
